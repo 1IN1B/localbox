@@ -7,6 +7,7 @@ import { Features } from '@/components/landing/Features';
 import { HowItWorks } from '@/components/landing/HowItWorks';
 import { CtaBand } from '@/components/landing/CtaBand';
 import { Footer } from '@/components/landing/Footer';
+import { AnalyticsPanel } from '@/components/landing/AnalyticsPanel';
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <main className="flex-1">
         <Hero />
         <ToolsGrid />
+        <AnalyticsPanel />
         <Features />
         <HowItWorks />
         <CtaBand />

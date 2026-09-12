@@ -13,6 +13,7 @@ import ProcessingOverlay from '@/components/shared/ProcessingOverlay';
 import { Button } from '@/components/ui/button';
 import { useFileStore } from '@/stores/useFileStore';
 import { runPdfJob } from '@/lib/workers/client';
+import { trackOperation } from '@/lib/analytics/client';
 
 export default function ImagesToPdfPage() {
   const store = useFileStore();
@@ -48,6 +49,7 @@ export default function ImagesToPdfPage() {
           new Blob([result.data.buffer as ArrayBuffer], { type: 'application/pdf' }),
           result.name
         );
+        void trackOperation('images-to-pdf');
       }
     },
     onError: (err: Error) => {

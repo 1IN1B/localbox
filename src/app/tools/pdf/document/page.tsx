@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import { useFileStore } from '@/stores/useFileStore';
 import { formatBytes } from '@/lib/utils';
 import { runPdfJob } from '@/lib/workers/client';
+import { trackOperation } from '@/lib/analytics/client';
 import type { FileItem } from '@/stores/useFileStore';
 
 type FileKind = 'docx' | 'txt' | 'md';
@@ -109,6 +110,7 @@ export default function DocumentToPdfPage() {
           new Blob([result.data.buffer as ArrayBuffer], { type: 'application/pdf' }),
           `${file.name.replace(/\.[^.]+$/, '')}.pdf`
         );
+        void trackOperation('document-to-pdf');
       }
     },
     onError: (err: Error) => {

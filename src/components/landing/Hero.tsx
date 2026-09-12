@@ -20,11 +20,10 @@ const item = {
 export function Hero() {
   return (
     <section className="relative overflow-hidden">
-      {/* Animated gradient background */}
-      <div className="animated-gradient absolute inset-0" />
+      <div className="animated-gradient absolute inset-0 opacity-80" />
 
       {/* Grid overlay */}
-      <div className="bg-grid absolute inset-0" />
+      <div className="surface-grid absolute inset-0" />
 
       {/* Floating blurred blobs */}
       <div
@@ -41,16 +40,16 @@ export function Hero() {
       />
 
       {/* Content */}
-      <div className="relative mx-auto max-w-6xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-40">
+      <div className="relative mx-auto max-w-6xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-36">
         <motion.div
           variants={container}
           initial="hidden"
           animate="show"
-          className="mx-auto max-w-3xl text-center"
+          className="mx-auto max-w-4xl text-center"
         >
           {/* Badge */}
           <motion.div variants={item} className="mb-8 flex justify-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-4 py-1.5 text-xs font-medium text-muted-foreground shadow-sm backdrop-blur-sm sm:text-sm">
+            <span className="glass-panel inline-flex items-center gap-2 rounded-full border border-border/60 px-4 py-1.5 text-xs font-semibold text-muted-foreground backdrop-blur-sm sm:text-sm">
               <ShieldCheck className="size-3.5 text-emerald-500 sm:size-4" />
               100% client-side &middot; No uploads &middot; No login
             </span>
@@ -59,7 +58,7 @@ export function Hero() {
           {/* Headline */}
           <motion.h1
             variants={item}
-            className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl"
+            className="text-4xl font-bold tracking-[-0.055em] text-foreground sm:text-6xl lg:text-7xl lg:leading-[1.02]"
           >
             PDF &amp; audio tools that{' '}
             <span className="bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500 bg-clip-text text-transparent">
@@ -70,7 +69,7 @@ export function Hero() {
           {/* Subheadline */}
           <motion.p
             variants={item}
-            className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl"
+            className="mx-auto mt-7 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-xl"
           >
             Merge, trim, and convert PDFs and audio right in your browser.
             Powered by Web Workers &mdash; fast, private, and free.
@@ -79,18 +78,18 @@ export function Hero() {
           {/* CTA Buttons */}
           <motion.div
             variants={item}
-            className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4"
+            className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4"
           >
             <Link
               href="#tools"
-              className="inline-flex h-11 items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-6 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition-all hover:shadow-xl hover:shadow-indigo-500/30 hover:brightness-110 active:scale-[0.98]"
+              className="inline-flex h-12 items-center gap-2 rounded-2xl bg-gradient-to-r from-indigo-500 via-violet-500 to-violet-600 px-6 text-sm font-semibold text-white shadow-xl shadow-indigo-500/25 transition-all hover:-translate-y-0.5 hover:shadow-indigo-500/35 hover:brightness-110 active:scale-[0.98]"
             >
               <Sparkles className="size-4" />
               Explore tools
             </Link>
             <Link
               href="#how-it-works"
-              className="inline-flex h-11 items-center gap-2 rounded-xl border border-border bg-background/70 px-6 text-sm font-semibold text-foreground backdrop-blur-sm transition-all hover:bg-muted"
+              className="glass-panel inline-flex h-12 items-center gap-2 rounded-2xl border border-border/70 px-6 text-sm font-semibold text-foreground backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:bg-background"
             >
               How it works
               <ArrowRight className="size-4" />
@@ -100,7 +99,7 @@ export function Hero() {
           {/* Trust row */}
           <motion.div
             variants={item}
-            className="mt-10 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-muted-foreground sm:text-sm"
+            className="mt-11 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-medium text-muted-foreground sm:text-sm"
           >
             <span className="flex items-center gap-1.5">
               <span className="size-1.5 rounded-full bg-emerald-500" />

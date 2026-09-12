@@ -25,15 +25,17 @@ export default function ProcessingOverlay({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className={cn(
-        'absolute inset-0 z-50 flex flex-col items-center justify-center rounded-xl bg-background/80 backdrop-blur-sm',
+        'absolute inset-0 z-50 flex flex-col items-center justify-center rounded-3xl bg-background/70 p-4 backdrop-blur-md',
         className
       )}
     >
-      <div className="flex flex-col items-center gap-4 p-6">
-        <Loader2 className="size-8 animate-spin text-primary" />
+      <div className="glass-panel flex w-full max-w-sm flex-col items-center gap-4 rounded-3xl border border-border/70 p-6 text-center shadow-xl">
+        <div className="flex size-12 items-center justify-center rounded-2xl bg-primary/10">
+          <Loader2 className="size-6 animate-spin text-primary" />
+        </div>
 
         <div className="w-full max-w-xs">
-          <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
+          <div className="h-2.5 w-full overflow-hidden rounded-full bg-muted">
             <motion.div
               className="h-full rounded-full bg-primary"
               initial={{ width: '0%' }}

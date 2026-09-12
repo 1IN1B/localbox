@@ -17,6 +17,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useFileStore } from '@/stores/useFileStore';
 import { runAudioJob } from '@/lib/workers/client';
+import { trackOperation } from '@/lib/analytics/client';
 import ToolHeader from '@/components/shared/ToolHeader';
 import FileDropzone from '@/components/shared/FileDropzone';
 import ProcessingOverlay from '@/components/shared/ProcessingOverlay';
@@ -115,6 +116,9 @@ export default function TrimAudioPage() {
       const name = result.name || `${baseName}_trimmed.${ext}`;
       store.setDone(blob, name);
       return { blob, name };
+    },
+    onSuccess: () => {
+      void trackOperation('audio-trim');
     },
     onError: (error: Error) => {
       store.setError(error.message || 'Failed to trim audio');

@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useFileStore } from '@/stores/useFileStore';
 import { runAudioJob } from '@/lib/workers/client';
+import { trackOperation } from '@/lib/analytics/client';
 import ToolHeader from '@/components/shared/ToolHeader';
 import FileDropzone from '@/components/shared/FileDropzone';
 import FileList from '@/components/shared/FileList';
@@ -58,6 +59,9 @@ export default function MergeAudioPage() {
       const name = result.name || `merged.${ext}`;
       store.setDone(blob, name);
       return { blob, name };
+    },
+    onSuccess: () => {
+      void trackOperation('audio-merge');
     },
     onError: (error: Error) => {
       store.setError(error.message || 'Failed to merge audio files');

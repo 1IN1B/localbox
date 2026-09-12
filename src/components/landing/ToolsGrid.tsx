@@ -20,6 +20,7 @@ const tools = [
     icon: FileStack,
     href: '/tools/pdf/merge',
     gradient: 'from-blue-500 to-indigo-600',
+    category: 'PDF',
     shadowColor: 'shadow-blue-500/20',
   },
   {
@@ -28,6 +29,7 @@ const tools = [
     icon: Scissors,
     href: '/tools/pdf/split',
     gradient: 'from-violet-500 to-purple-600',
+    category: 'PDF',
     shadowColor: 'shadow-violet-500/20',
   },
   {
@@ -36,6 +38,7 @@ const tools = [
     icon: ImagePlus,
     href: '/tools/pdf/images',
     gradient: 'from-fuchsia-500 to-pink-600',
+    category: 'PDF',
     shadowColor: 'shadow-fuchsia-500/20',
   },
   {
@@ -44,6 +47,7 @@ const tools = [
     icon: FileText,
     href: '/tools/pdf/document',
     gradient: 'from-amber-500 to-orange-600',
+    category: 'PDF',
     shadowColor: 'shadow-amber-500/20',
   },
   {
@@ -52,6 +56,7 @@ const tools = [
     icon: AudioLines,
     href: '/tools/audio/merge',
     gradient: 'from-emerald-500 to-teal-600',
+    category: 'Audio',
     shadowColor: 'shadow-emerald-500/20',
   },
   {
@@ -60,6 +65,7 @@ const tools = [
     icon: ScissorsLineDashed,
     href: '/tools/audio/trim',
     gradient: 'from-rose-500 to-red-600',
+    category: 'Audio',
     shadowColor: 'shadow-rose-500/20',
   },
 ];
@@ -78,7 +84,8 @@ const item = {
 
 export function ToolsGrid() {
   return (
-    <section id="tools" className="relative py-20 sm:py-28">
+    <section id="tools" className="relative scroll-mt-20 py-20 sm:py-28">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent" />
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.div
@@ -88,7 +95,8 @@ export function ToolsGrid() {
           transition={{ duration: 0.5 }}
           className="mb-12 text-center sm:mb-16"
         >
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+          <p className="mb-3 text-sm font-semibold text-primary">Six purpose-built utilities</p>
+          <h2 className="text-3xl font-bold tracking-[-0.04em] sm:text-4xl">
             Everything you need
           </h2>
           <p className="mt-3 text-muted-foreground sm:text-lg">
@@ -109,8 +117,8 @@ export function ToolsGrid() {
               <Link
                 href={tool.href}
                 className={cn(
-                  'group relative flex flex-col rounded-2xl border border-border/60 bg-card p-6 transition-all duration-300',
-                  'hover:-translate-y-1 hover:border-transparent hover:shadow-xl',
+                  'group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border/70 bg-card p-6 transition-all duration-300',
+                  'hover:-translate-y-1.5 hover:border-primary/25 hover:shadow-xl',
                   tool.shadowColor,
                   'hover:shadow-lg'
                 )}
@@ -118,7 +126,7 @@ export function ToolsGrid() {
                 {/* Icon tile */}
                 <div
                   className={cn(
-                    'mb-4 flex size-12 items-center justify-center rounded-xl bg-gradient-to-br text-white shadow-lg',
+                    'mb-5 flex size-12 items-center justify-center rounded-2xl bg-gradient-to-br text-white shadow-lg',
                     tool.gradient,
                     tool.shadowColor
                   )}
@@ -126,24 +134,25 @@ export function ToolsGrid() {
                   <tool.icon className="size-6" />
                 </div>
 
-                {/* Text */}
-                <h3 className="mb-1.5 text-base font-semibold text-foreground">
+                <div className="mb-2 flex items-center justify-between gap-3">
+                  <span className="rounded-full bg-muted px-2 py-1 text-[10px] font-bold tracking-[0.12em] text-muted-foreground uppercase">{tool.category}</span>
+                  <ArrowUpRight className="size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground" />
+                </div>
+                <h3 className="mb-1.5 text-lg font-semibold tracking-tight text-foreground">
                   {tool.name}
                 </h3>
                 <p className="mb-4 flex-1 text-sm leading-relaxed text-muted-foreground">
                   {tool.description}
                 </p>
 
-                {/* Arrow */}
-                <span className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors group-hover:text-foreground">
-                  Open tool
-                  <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <span className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-foreground">
+                  Open workspace
                 </span>
 
                 {/* Hover glow border */}
                 <div
                   className={cn(
-                    'pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100',
+                    'pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100',
                     'ring-1 ring-inset',
                     tool.gradient.replace('from-', 'ring-').replace(' to-', '/30 ')
                   )}

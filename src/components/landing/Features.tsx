@@ -52,7 +52,7 @@ const item = {
 
 export function Features() {
   return (
-    <section id="features" className="relative py-20 sm:py-28">
+    <section id="features" className="relative scroll-mt-20 py-20 sm:py-28">
       {/* Subtle grid background */}
       <div className="bg-grid absolute inset-0" />
 

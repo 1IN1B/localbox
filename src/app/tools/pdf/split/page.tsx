@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import { useFileStore } from '@/stores/useFileStore';
 import { formatBytes } from '@/lib/utils';
 import { runPdfJob } from '@/lib/workers/client';
+import { trackOperation } from '@/lib/analytics/client';
 
 export default function SplitPdfPage() {
   const store = useFileStore();
@@ -86,6 +87,7 @@ export default function SplitPdfPage() {
           new Blob([result.data.buffer as ArrayBuffer], { type: 'application/pdf' }),
           result.name
         );
+        void trackOperation('pdf-trim');
       }
     },
     onError: (err: Error) => {

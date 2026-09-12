@@ -39,7 +39,7 @@ const item = {
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="relative py-20 sm:py-28">
+    <section id="how-it-works" className="relative scroll-mt-20 py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.div

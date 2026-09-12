@@ -35,7 +35,7 @@ export default function FileList({
   className,
 }: FileListProps) {
   return (
-    <div className={cn('space-y-1', className)}>
+    <div className={cn('space-y-2', className)}>
       <AnimatePresence mode="popLayout">
         {files.map((file, index) => (
           <motion.div
@@ -45,7 +45,7 @@ export default function FileList({
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, x: -20, height: 0 }}
             transition={{ type: 'spring', stiffness: 500, damping: 35 }}
-            className="flex items-center gap-2 rounded-lg border bg-card px-3 py-2"
+            className="group flex items-center gap-3 rounded-2xl border border-border/70 bg-card px-3 py-2.5 shadow-sm transition-colors hover:border-primary/25"
           >
             {showReorder && onReorder && (
               <div className="flex flex-col -space-y-1">
@@ -69,15 +69,17 @@ export default function FileList({
                 </button>
               </div>
             )}
-            {getFileIcon(file.name)}
-            <span className="min-w-0 flex-1 truncate text-sm">{file.name}</span>
+            <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-muted">
+              {getFileIcon(file.name)}
+            </span>
+            <span className="min-w-0 flex-1 truncate text-sm font-medium">{file.name}</span>
             <span className="shrink-0 text-xs text-muted-foreground">
               {formatBytes(file.size)}
             </span>
             <button
               type="button"
               onClick={() => onRemove(file.id)}
-              className="shrink-0 rounded p-1 text-muted-foreground hover:text-destructive"
+              className="shrink-0 rounded-lg p-1.5 text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
               aria-label={`Remove ${file.name}`}
             >
               <X className="size-4" />

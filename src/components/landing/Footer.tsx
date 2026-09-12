@@ -59,7 +59,7 @@ export function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="#features"
+                  href="/#features"
                   className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                 >
                   Features
@@ -67,7 +67,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="#how-it-works"
+                  href="/#how-it-works"
                   className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                 >
                   How It Works
@@ -75,7 +75,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="https://github.com/bibhuti/localbox"
+                  href="https://github.com/1IN1B/localbox"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -86,26 +86,27 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Privacy column */}
+          {/* Privacy & Legal column */}
           <div>
             <h4 className="mb-3 text-sm font-semibold text-foreground">
-              Privacy
+              Legal & Privacy
             </h4>
             <ul className="space-y-2">
               <li>
-                <span className="text-sm text-muted-foreground">
-                  100% client-side processing
-                </span>
+                <Link
+                  href="/privacy"
+                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  Privacy Policy
+                </Link>
               </li>
               <li>
-                <span className="text-sm text-muted-foreground">
-                  No files uploaded
-                </span>
-              </li>
-              <li>
-                <span className="text-sm text-muted-foreground">
-                  No accounts required
-                </span>
+                <Link
+                  href="/terms"
+                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  Terms of Service
+                </Link>
               </li>
             </ul>
           </div>
