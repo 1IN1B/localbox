@@ -2,9 +2,13 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import QueryProvider from "@/components/providers/query-provider";
 
-const siteUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "http://localhost:3000");
 
 const TITLE = "Localbox — Browser PDF & Audio Tools";
 const DESCRIPTION =
