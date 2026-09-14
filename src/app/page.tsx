@@ -6,6 +6,7 @@ import { ToolsGrid } from '@/components/landing/ToolsGrid';
 import { Features } from '@/components/landing/Features';
 import { HowItWorks } from '@/components/landing/HowItWorks';
 import { CtaBand } from '@/components/landing/CtaBand';
+import { SupportCta } from '@/components/landing/SupportCta';
 import { Footer } from '@/components/landing/Footer';
 import { AnalyticsPanel } from '@/components/landing/AnalyticsPanel';
 
@@ -20,6 +21,7 @@ export default function Home() {
         <Features />
         <HowItWorks />
         <CtaBand />
+        <SupportCta />
       </main>
       <Footer />
     </>

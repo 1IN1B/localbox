@@ -75,6 +75,14 @@ export function Footer() {
               </li>
               <li>
                 <Link
+                  href="/support"
+                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  Support us
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="https://github.com/1IN1B/localbox"
                   target="_blank"
                   rel="noopener noreferrer"

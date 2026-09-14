@@ -14,6 +14,7 @@ const navLinks = [
   { href: '/#tools', label: 'Tools' },
   { href: '/#features', label: 'Features' },
   { href: '/#how-it-works', label: 'How It Works' },
+  { href: '/support', label: 'Support us' },
 ];
 
 export function Nav() {
