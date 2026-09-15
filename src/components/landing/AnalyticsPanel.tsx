@@ -12,6 +12,7 @@ import {
   Scissors,
   ScissorsLineDashed,
   ShieldCheck,
+  Image as ImageIcon,
   Sparkles,
   Users,
   Zap,
@@ -72,6 +73,13 @@ const toolMetadata: Record<
     bg: 'bg-rose-500/10 text-rose-500 dark:bg-rose-500/15',
     border: 'border-rose-500/20',
     barColor: 'from-rose-500 to-red-600',
+  },
+  'image-editor': {
+    icon: ImageIcon,
+    gradient: 'from-sky-500 to-blue-600',
+    bg: 'bg-sky-500/10 text-sky-500 dark:bg-sky-500/15',
+    border: 'border-sky-500/20',
+    barColor: 'from-sky-500 to-blue-600',
   },
 };
 

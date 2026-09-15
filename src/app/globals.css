@@ -131,32 +131,23 @@
     linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
 
-/* Animated gradient background */
-.animated-gradient {
+/* Static gradient background */
+.hero-gradient {
   background: linear-gradient(
     135deg,
     oklch(0.97 0 0) 0%,
     oklch(0.95 0.01 250) 50%,
     oklch(0.97 0.01 300) 100%
   );
-  background-size: 400% 400%;
-  animation: gradient-shift 15s ease infinite;
 }
 
-.dark .animated-gradient {
+.dark .hero-gradient {
   background: linear-gradient(
     135deg,
     oklch(0.145 0 0) 0%,
     oklch(0.17 0.01 250) 50%,
     oklch(0.145 0.01 300) 100%
   );
-  background-size: 400% 400%;
-}
-
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
 }
 
 /* Floating blob animation */

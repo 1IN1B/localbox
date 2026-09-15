@@ -5,6 +5,7 @@ export const operationLabels = {
   'document-to-pdf': 'Document to PDF',
   'audio-merge': 'Merge Audio',
   'audio-trim': 'Trim Audio',
+  'image-editor': 'Image Editor',
 } as const;
 
 export type OperationName = keyof typeof operationLabels;

@@ -8,6 +8,7 @@ import {
   FileText,
   AudioLines,
   ScissorsLineDashed,
+  Image as ImageIcon,
   ArrowUpRight,
 } from 'lucide-react';
 import { motion } from 'motion/react';
@@ -49,6 +50,15 @@ const tools = [
     gradient: 'from-amber-500 to-orange-600',
     category: 'PDF',
     shadowColor: 'shadow-amber-500/20',
+  },
+  {
+    name: 'Image Editor',
+    description: 'Crop, adjust colors, apply filters & convert formats',
+    icon: ImageIcon,
+    href: '/tools/image/editor',
+    gradient: 'from-sky-500 to-blue-600',
+    category: 'Image',
+    shadowColor: 'shadow-sky-500/20',
   },
   {
     name: 'Merge Audio',

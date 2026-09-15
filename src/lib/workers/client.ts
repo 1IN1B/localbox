@@ -1,4 +1,4 @@
-import type { PdfJob, AudioJob, WorkerResponse, WorkerProgress } from './types';
+import type { PdfJob, AudioJob, ImageJob, WorkerResponse, WorkerProgress } from './types';
 
 type ProgressCallback = (p: WorkerProgress) => void;
 
@@ -11,10 +11,12 @@ interface WorkerState {
 const IDLE_TIMEOUT_MS = 60_000;
 const pendingPdf = new Map<number, { resolve: (v: { data: Uint8Array; name: string }) => void; reject: (e: Error) => void }>();
 const pendingAudio = new Map<number, { resolve: (v: { data: Uint8Array; name: string }) => void; reject: (e: Error) => void }>();
+const pendingImage = new Map<number, { resolve: (v: { data: Uint8Array; name: string }) => void; reject: (e: Error) => void }>();
 const pendingHtmlPdf = new Map<number, { resolve: (v: { html: string }) => void; reject: (e: Error) => void }>();
 
 const pdfState: WorkerState = { worker: null, idleTimer: null, jobId: 0 };
 const audioState: WorkerState = { worker: null, idleTimer: null, jobId: 0 };
+const imageState: WorkerState = { worker: null, idleTimer: null, jobId: 0 };
 
 function resetIdleTimer(state: WorkerState) {
   if (state.idleTimer) clearTimeout(state.idleTimer);
@@ -103,6 +105,32 @@ function createAudioWorker(): Worker {
   return w;
 }
 
+function createImageWorker(): Worker {
+  const w = new Worker(new URL('./image.worker.ts', import.meta.url), { type: 'module' });
+  w.onmessage = (e: MessageEvent<WorkerResponse | WorkerProgress>) => {
+    const msg = e.data;
+
+    if (isProgressMessage(msg)) {
+      return;
+    }
+
+    const response = msg as WorkerResponse;
+    const pending = pendingImage.get(response.id);
+    if (pending) {
+      pendingImage.delete(response.id);
+      if (response.ok && 'data' in response) {
+        pending.resolve({ data: new Uint8Array(response.data), name: response.name });
+      } else if (!response.ok) {
+        pending.reject(new Error(response.error));
+      }
+    }
+  };
+  w.onerror = (e) => {
+    console.error('[Image Worker] Error:', e);
+  };
+  return w;
+}
+
 function ensurePdfWorker(state: WorkerState, onProgress?: ProgressCallback): Worker {
   cancelIdleTimer(state);
 
@@ -180,6 +208,37 @@ function ensureAudioWorker(state: WorkerState, onProgress?: ProgressCallback): W
   return state.worker;
 }
 
+function ensureImageWorker(state: WorkerState, onProgress?: ProgressCallback): Worker {
+  cancelIdleTimer(state);
+
+  if (!state.worker) {
+    state.worker = createImageWorker();
+  }
+
+  const w = state.worker;
+  w.onmessage = (e: MessageEvent<WorkerResponse | WorkerProgress>) => {
+    const msg = e.data;
+    if (isProgressMessage(msg)) {
+      onProgress?.(msg);
+      return;
+    }
+
+    const response = msg as WorkerResponse;
+    const pending = pendingImage.get(response.id);
+    if (pending) {
+      pendingImage.delete(response.id);
+      if (response.ok && 'data' in response) {
+        pending.resolve({ data: new Uint8Array(response.data), name: response.name });
+      } else if (!response.ok) {
+        pending.reject(new Error(response.error));
+      }
+    }
+  };
+
+  resetIdleTimer(state);
+  return state.worker;
+}
+
 /**
  * Run a PDF job in the PDF worker.
  * Returns the result data or HTML (for docx intermediate step).
@@ -221,9 +280,25 @@ export async function runAudioJob(
 }
 
 /**
+ * Run an image job in the image worker.
+ */
+export async function runImageJob(
+  job: ImageJob,
+  onProgress?: ProgressCallback
+): Promise<{ data: Uint8Array; name: string }> {
+  const id = ++imageState.jobId;
+  const worker = ensureImageWorker(imageState, onProgress);
+
+  return new Promise<{ data: Uint8Array; name: string }>((resolve, reject) => {
+    pendingImage.set(id, { resolve, reject });
+    worker.postMessage({ id, job }, { transfer: getTransferables(job) });
+  });
+}
+
+/**
  * Extract transferable ArrayBuffers from a job for zero-copy postMessage.
  */
-function getTransferables(job: PdfJob | AudioJob): ArrayBuffer[] {
+function getTransferables(job: PdfJob | AudioJob | ImageJob): ArrayBuffer[] {
   const transferables: ArrayBuffer[] = [];
   const seen = new Set<ArrayBuffer>();
 
@@ -240,11 +315,18 @@ function getTransferables(job: PdfJob | AudioJob): ArrayBuffer[] {
       push(f.data.buffer as ArrayBuffer);
     }
   }
-  if ('file' in job) {
+  if ('file' in job && job.type !== 'process-image') {
     // Copy before transfer: the caller may reuse the same buffer for a
     // second job (e.g. DOCX two-step flow), and transfer detaches it.
     const buf = (job as { file: Uint8Array }).file.buffer as ArrayBuffer;
     push(buf.slice(0));
+  }
+  if (job.type === 'process-image') {
+    // Clone before transfer so caller keeps original buffer in memory
+    const buf = job.file.buffer as ArrayBuffer;
+    const copy = buf.slice(0);
+    job.file = new Uint8Array(copy);
+    push(copy);
   }
   if ('images' in job) {
     for (const img of (job as { images: { data: Uint8Array }[] }).images) {

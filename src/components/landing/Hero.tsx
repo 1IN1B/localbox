@@ -126,7 +126,7 @@ export function Hero() {
       onMouseLeave={handleMouseLeave}
       className="relative overflow-hidden"
     >
-      <div className="animated-gradient absolute inset-0 opacity-80" />
+      <div className="hero-gradient absolute inset-0 opacity-80" />
 
       {/* Grid overlay */}
       <div className="surface-grid absolute inset-0" />
